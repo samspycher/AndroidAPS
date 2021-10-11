@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
 import info.nightscout.androidaps.activities.TDDStatsActivity
+import info.nightscout.androidaps.diaconn.activities.DiaconnG8HistoryActivity
+import info.nightscout.androidaps.diaconn.activities.DiaconnG8UserOptionsActivity
 import info.nightscout.androidaps.diaconn.databinding.DiaconnG8FragmentBinding
 import info.nightscout.androidaps.diaconn.events.EventDiaconnG8NewStatus
 import info.nightscout.androidaps.events.EventExtendedBolusChange
@@ -48,7 +51,7 @@ class DiaconnG8Fragment : DaggerFragment() {
 
     private var disposable: CompositeDisposable = CompositeDisposable()
 
-    private val loopHandler = Handler()
+    private val loopHandler = Handler(Looper.getMainLooper())
     private lateinit var refreshLoop: Runnable
 
     private var _binding: DiaconnG8FragmentBinding? = null
@@ -73,10 +76,9 @@ class DiaconnG8Fragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.diaconnG8Pumpstatus.setBackgroundColor(resourceHelper.gc(R.color.colorInitializingBorder))
-        binding.history.setOnClickListener { startActivity(Intent(context, info.nightscout.androidaps.diaconn.activities.DiaconnG8HistoryActivity::class.java)) }
+        binding.history.setOnClickListener { startActivity(Intent(context, DiaconnG8HistoryActivity::class.java)) }
         binding.stats.setOnClickListener { startActivity(Intent(context, TDDStatsActivity::class.java)) }
-        binding.userOptions.setOnClickListener { startActivity(Intent(context, info.nightscout.androidaps.diaconn.activities.DiaconnG8UserOptionsActivity::class.java)) }
+        binding.userOptions.setOnClickListener { startActivity(Intent(context, DiaconnG8UserOptionsActivity::class.java)) }
         binding.btconnection.setOnClickListener {
             aapsLogger.debug(LTag.PUMP, "Clicked connect to pump")
             diaconnG8Pump.lastConnection = 0
