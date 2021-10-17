@@ -95,15 +95,15 @@ import kotlin.math.roundToInt
        *
        * It is a Maybe as there might be no next element.
        * */
-    fun getNextSyncElementGlucoseValue(id: Long): Maybe<Pair<GlucoseValue, GlucoseValue>> =
+    fun getNextSyncElementGlucoseValue(id: Long): Maybe<Pair<GlucoseValue, Long>> =
         database.glucoseValueDao.getNextModifiedOrNewAfter(id)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.glucoseValueDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 
@@ -123,15 +123,15 @@ import kotlin.math.roundToInt
        *
        * It is a Maybe as there might be no next element.
        * */
-    fun getNextSyncElementTemporaryTarget(id: Long): Maybe<Pair<TemporaryTarget, TemporaryTarget>> =
+    fun getNextSyncElementTemporaryTarget(id: Long): Maybe<Pair<TemporaryTarget, Long>> =
         database.temporaryTargetDao.getNextModifiedOrNewAfter(id)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.temporaryTargetDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 
@@ -185,15 +185,15 @@ import kotlin.math.roundToInt
 
     // PROFILE SWITCH
 
-    fun getNextSyncElementProfileSwitch(id: Long): Maybe<Pair<ProfileSwitch, ProfileSwitch>> =
+    fun getNextSyncElementProfileSwitch(id: Long): Maybe<Pair<ProfileSwitch, Long>> =
         database.profileSwitchDao.getNextModifiedOrNewAfter(id)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.profileSwitchDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 
@@ -250,15 +250,15 @@ import kotlin.math.roundToInt
        *
        * It is a Maybe as there might be no next element.
        * */
-    fun getNextSyncElementEffectiveProfileSwitch(id: Long): Maybe<Pair<EffectiveProfileSwitch, EffectiveProfileSwitch>> =
+    fun getNextSyncElementEffectiveProfileSwitch(id: Long): Maybe<Pair<EffectiveProfileSwitch, Long>> =
         database.effectiveProfileSwitchDao.getNextModifiedOrNewAfter(id)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.effectiveProfileSwitchDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 
@@ -309,15 +309,15 @@ import kotlin.math.roundToInt
        *
        * It is a Maybe as there might be no next element.
        * */
-    fun getNextSyncElementTherapyEvent(id: Long): Maybe<Pair<TherapyEvent, TherapyEvent>> =
+    fun getNextSyncElementTherapyEvent(id: Long): Maybe<Pair<TherapyEvent, Long>> =
         database.therapyEventDao.getNextModifiedOrNewAfter(id)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.therapyEventDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 
@@ -376,15 +376,15 @@ import kotlin.math.roundToInt
        *
        * It is a Maybe as there might be no next element.
        * */
-    fun getNextSyncElementFood(id: Long): Maybe<Pair<Food, Food>> =
+    fun getNextSyncElementFood(id: Long): Maybe<Pair<Food, Long>> =
         database.foodDao.getNextModifiedOrNewAfter(id)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.foodDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 
@@ -412,15 +412,15 @@ import kotlin.math.roundToInt
       *
       * It is a Maybe as there might be no next element.
       * */
-    fun getNextSyncElementBolus(id: Long): Maybe<Pair<Bolus, Bolus>> =
+    fun getNextSyncElementBolus(id: Long): Maybe<Pair<Bolus, Long>> =
         database.bolusDao.getNextModifiedOrNewAfterExclude(id, Bolus.Type.PRIMING)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.bolusDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 
@@ -499,15 +499,15 @@ import kotlin.math.roundToInt
       *
       * It is a Maybe as there might be no next element.
       * */
-    fun getNextSyncElementCarbs(id: Long): Maybe<Pair<Carbs, Carbs>> =
+    fun getNextSyncElementCarbs(id: Long): Maybe<Pair<Carbs, Long>> =
         database.carbsDao.getNextModifiedOrNewAfter(id)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.carbsDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 
@@ -590,15 +590,15 @@ import kotlin.math.roundToInt
       *
       * It is a Maybe as there might be no next element.
       * */
-    fun getNextSyncElementBolusCalculatorResult(id: Long): Maybe<Pair<BolusCalculatorResult, BolusCalculatorResult>> =
+    fun getNextSyncElementBolusCalculatorResult(id: Long): Maybe<Pair<BolusCalculatorResult, Long>> =
         database.bolusCalculatorResultDao.getNextModifiedOrNewAfter(id)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.bolusCalculatorResultDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 
@@ -658,15 +658,15 @@ import kotlin.math.roundToInt
        * It is a Maybe as there might be no next element.
        * */
 
-    fun getNextSyncElementTemporaryBasal(id: Long): Maybe<Pair<TemporaryBasal, TemporaryBasal>> =
+    fun getNextSyncElementTemporaryBasal(id: Long): Maybe<Pair<TemporaryBasal, Long>> =
         database.temporaryBasalDao.getNextModifiedOrNewAfter(id)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.temporaryBasalDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 
@@ -720,15 +720,15 @@ import kotlin.math.roundToInt
       * It is a Maybe as there might be no next element.
       * */
 
-    fun getNextSyncElementExtendedBolus(id: Long): Maybe<Pair<ExtendedBolus, ExtendedBolus>> =
+    fun getNextSyncElementExtendedBolus(id: Long): Maybe<Pair<ExtendedBolus, Long>> =
         database.extendedBolusDao.getNextModifiedOrNewAfter(id)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.extendedBolusDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 
@@ -788,15 +788,15 @@ import kotlin.math.roundToInt
        *
        * It is a Maybe as there might be no next element.
        * */
-    fun getNextSyncElementOfflineEvent(id: Long): Maybe<Pair<OfflineEvent, OfflineEvent>> =
+    fun getNextSyncElementOfflineEvent(id: Long): Maybe<Pair<OfflineEvent, Long>> =
         database.offlineEventDao.getNextModifiedOrNewAfter(id)
             .flatMap { nextIdElement ->
                 val nextIdElemReferenceId = nextIdElement.referenceId
                 if (nextIdElemReferenceId == null) {
-                    Maybe.just(nextIdElement to nextIdElement)
+                    Maybe.just(nextIdElement to nextIdElement.id)
                 } else {
                     database.offlineEventDao.getCurrentFromHistoric(nextIdElemReferenceId)
-                        .map { it to nextIdElement }
+                        .map { it to nextIdElement.id }
                 }
             }
 

@@ -1,10 +1,11 @@
 package info.nightscout.androidaps.plugins.configBuilder
 
+import info.nightscout.androidaps.core.BuildConfig
 import info.nightscout.androidaps.core.R
 import info.nightscout.androidaps.interfaces.*
 import info.nightscout.androidaps.logging.AAPSLogger
 import info.nightscout.androidaps.logging.LTag
-import info.nightscout.androidaps.plugins.bus.RxBus
+import info.nightscout.androidaps.plugins.bus.RxBusWrapper
 import info.nightscout.androidaps.plugins.general.overview.events.EventNewNotification
 import info.nightscout.androidaps.plugins.general.overview.notifications.Notification
 import info.nightscout.androidaps.plugins.pump.common.defs.PumpType
@@ -24,7 +25,7 @@ class RunningConfiguration @Inject constructor(
     private val aapsLogger: AAPSLogger,
     private val config: Config,
     private val resourceHelper: ResourceHelper,
-    private val rxBus: RxBus
+    private val rxBus: RxBusWrapper
 ) {
 
     private var counter = 0

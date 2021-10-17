@@ -41,7 +41,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" } // jacoco 0.2
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath 'com.android.tools.build:gradle:7.0.2'
         classpath 'com.google.gms:google-services:4.3.10'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
 
@@ -73,7 +73,7 @@ allprojects {
                     "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
                     '-Xjvm-default=all'     //Support @JvmDefault
             ]
-            jvmTarget = "11"
+            jvmTarget = "1.8"
         }
     }
 }

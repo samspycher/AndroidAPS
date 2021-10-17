@@ -46,7 +46,7 @@ class TirCalculator @Inject constructor(
         return result
     }
 
-    private fun averageTIR(tirs: LongSparseArray<TIR>): TIR {
+    fun averageTIR(tirs: LongSparseArray<TIR>): TIR {
         val totalTir = if (tirs.size() > 0) {
             TIR(tirs.valueAt(0).date, tirs.valueAt(0).lowThreshold, tirs.valueAt(0).highThreshold)
         } else {

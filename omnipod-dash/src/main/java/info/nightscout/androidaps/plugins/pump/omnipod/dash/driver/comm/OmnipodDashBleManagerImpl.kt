@@ -30,8 +30,9 @@ class OmnipodDashBleManagerImpl @Inject constructor(
 ) : OmnipodDashBleManager {
 
     private val busy = AtomicBoolean(false)
-    private val bluetoothAdapter: BluetoothAdapter?
-        get() = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager?)?.adapter
+    private val bluetoothManager: BluetoothManager =
+        context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+    private val bluetoothAdapter: BluetoothAdapter = bluetoothManager.adapter
     private var connection: Connection? = null
     private val ids = Ids(podState)
 
@@ -122,8 +123,7 @@ class OmnipodDashBleManagerImpl @Inject constructor(
                 val podAddress =
                     podState.bluetoothAddress
                         ?: throw FailedToConnectException("Missing bluetoothAddress, activate the pod first")
-                val podDevice = bluetoothAdapter?.getRemoteDevice(podAddress)
-                    ?: throw ConnectException("Bluetooth not available")
+                val podDevice = bluetoothAdapter.getRemoteDevice(podAddress)
                 val conn = connection
                     ?: Connection(podDevice, aapsLogger, context, podState)
                 connection = conn
@@ -193,9 +193,7 @@ class OmnipodDashBleManagerImpl @Inject constructor(
             aapsLogger.info(LTag.PUMPBTCOMM, "Starting new pod activation")
 
             emitter.onNext(PodEvent.Scanning)
-            val adapter = bluetoothAdapter
-                ?: throw ConnectException("Bluetooth not available")
-            val podScanner = PodScanner(aapsLogger, adapter)
+            val podScanner = PodScanner(aapsLogger, bluetoothAdapter)
             val podAddress = podScanner.scanForPod(
                 PodScanner.SCAN_FOR_SERVICE_UUID,
                 PodScanner.POD_ID_NOT_ACTIVATED
@@ -203,7 +201,7 @@ class OmnipodDashBleManagerImpl @Inject constructor(
             podState.bluetoothAddress = podAddress
 
             emitter.onNext(PodEvent.BluetoothConnecting)
-            val podDevice = adapter.getRemoteDevice(podAddress)
+            val podDevice = bluetoothAdapter.getRemoteDevice(podAddress)
             val conn = Connection(podDevice, aapsLogger, context, podState)
             connection = conn
             conn.connect(ConnectionWaitCondition(timeoutMs = 3 * Connection.BASE_CONNECT_TIMEOUT_MS))

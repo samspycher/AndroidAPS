@@ -17,7 +17,7 @@ class SyncNsFoodTransaction(private val food: Food) : Transaction<SyncNsFoodTran
 
         if (current != null) {
             // nsId exists, update if different
-            if (!current.contentEqualsTo(food)) {
+            if (!current.isEqual(food)) {
                 current.copyFrom(food)
                 database.foodDao.updateExistingEntry(current)
                 if (food.isValid && current.isValid) result.updated.add(current)

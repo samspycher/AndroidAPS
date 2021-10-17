@@ -4,7 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import info.nightscout.androidaps.logging.AAPSLogger;
-import info.nightscout.androidaps.plugins.bus.RxBus;
+import info.nightscout.androidaps.plugins.bus.RxBusWrapper;
 import info.nightscout.androidaps.plugins.general.overview.events.EventDismissNotification;
 import info.nightscout.androidaps.plugins.general.overview.notifications.Notification;
 import info.nightscout.androidaps.plugins.pump.omnipod.eros.definition.OmnipodErosStorageKeys;
@@ -18,10 +18,10 @@ import info.nightscout.androidaps.utils.sharedPreferences.SP;
 @Singleton
 public class AapsErosPodStateManager extends ErosPodStateManager {
     private final SP sp;
-    private final RxBus rxBus;
+    private final RxBusWrapper rxBus;
 
     @Inject
-    public AapsErosPodStateManager(AAPSLogger aapsLogger, SP sp, RxBus rxBus) {
+    public AapsErosPodStateManager(AAPSLogger aapsLogger, SP sp, RxBusWrapper rxBus) {
         super(aapsLogger);
         this.sp = sp;
         this.rxBus = rxBus;

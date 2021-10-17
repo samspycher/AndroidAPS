@@ -45,20 +45,14 @@ data class GlucoseValue(
 ) : TraceableDBEntry, DBEntryWithTime {
 
     fun contentEqualsTo(other: GlucoseValue): Boolean =
-        isValid == other.isValid &&
-            timestamp == other.timestamp &&
+        timestamp == other.timestamp &&
             utcOffset == other.utcOffset &&
             raw == other.raw &&
             value == other.value &&
             trendArrow == other.trendArrow &&
             noise == other.noise &&
-            sourceSensor == other.sourceSensor
-
-    fun onlyNsIdAdded(previous: GlucoseValue): Boolean =
-        previous.id != id &&
-            contentEqualsTo(previous) &&
-            previous.interfaceIDs.nightscoutId == null &&
-            interfaceIDs.nightscoutId != null
+            sourceSensor == other.sourceSensor &&
+            isValid == other.isValid
 
     fun isRecordDeleted(other: GlucoseValue): Boolean =
         isValid && !other.isValid

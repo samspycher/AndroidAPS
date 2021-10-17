@@ -3,7 +3,7 @@ package info.nightscout.androidaps.utils
 import android.app.backup.BackupAgentHelper
 import android.app.backup.SharedPreferencesBackupHelper
 
-@Suppress("LocalVariableName", "unused")
+@Suppress("LocalVariableName")
 class SPBackupAgent : BackupAgentHelper() {
 
     override fun onCreate() {

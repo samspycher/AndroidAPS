@@ -36,18 +36,4 @@ data class Carbs(
     override var utcOffset: Long = TimeZone.getDefault().getOffset(timestamp).toLong(),
     override var duration: Long, // in milliseconds
     var amount: Double
-) : TraceableDBEntry, DBEntryWithTimeAndDuration {
-
-    private fun contentEqualsTo(other: Carbs): Boolean =
-        isValid == other.isValid &&
-            timestamp == other.timestamp &&
-            utcOffset == other.utcOffset &&
-            amount == other.amount &&
-            duration == other.duration
-
-    fun onlyNsIdAdded(previous: Carbs): Boolean =
-        previous.id != id &&
-            contentEqualsTo(previous) &&
-            previous.interfaceIDs.nightscoutId == null &&
-            interfaceIDs.nightscoutId != null
-}
+) : TraceableDBEntry, DBEntryWithTimeAndDuration
